@@ -21,7 +21,13 @@ var app = express();
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
-var io = require('socket.io')(http);
+var io = require('socket.io')(https);
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
+
+
 
 httpServer.listen(80);
 httpsServer.listen(443);
