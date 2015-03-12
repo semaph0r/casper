@@ -10,21 +10,32 @@ var http = require('http');
 var https = require('https');
 var privateKey  = fs.readFileSync('cert/visionhack.key', 'utf8');
 var certificate = fs.readFileSync('cert/ssl.crt', 'utf8');
-var credentials = {key: privateKey, cert: certificate};
+var validCiphers = 'ECDHE-RSA-AES256-SHA:AES256-SHA:RC4-SHA:RC4:HIGH:!MD5:!aNULL:!EDH:!AESGCM'
+var sslOptions = {key: privateKey, cert: certificate, ciphers: validCiphers, honorCipherOrder: true};
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login')
 
-var app = express();
+/*var app = express();
 
 var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
+var httpsServer = https.createServer(sslOptions, app);
 
-var io = require('socket.io')(http);
+var io = require('socket.io')(https);
 
 httpServer.listen(80);
 httpsServer.listen(443);
+*/
+
+var app = express();
+var server = https.createServer(sslOptions, app);
+var io = socket.listen(server, {
+    "log level" : 3,
+    "match origin protocol" : true,
+    "transports" : ['websocket']
+});
+server.listen(8443);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
