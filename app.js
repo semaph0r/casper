@@ -17,29 +17,19 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login')
 
-/*var app = express();
 
-var httpServer = http.createServer(app);
-var httpsServer = https.createServer(sslOptions, app);
-
-var io = require('socket.io')(https);
+var app = express();
+var server = https.createServer(sslOptions, app);
+var io = require('socket.io').listen(server, {
+    "log level" : 3,
+    "match origin protocol" : true,
+    //"transports" : ['polling', 'websocket']
+});
+server.listen(443);
 
 io.on('connection', function(socket){
   console.log('a user connected');
 });
-
-httpServer.listen(80);
-httpsServer.listen(443);
-*/
-
-var app = express();
-var server = https.createServer(sslOptions, app);
-var io = socket.listen(server, {
-    "log level" : 3,
-    "match origin protocol" : true,
-    "transports" : ['websocket']
-});
-server.listen(8443);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
