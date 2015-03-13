@@ -29,6 +29,17 @@ server.listen(443);
 
 io.on('connection', function(socket){
   console.log('a user connected');
+  socket.on('setNickname', function(data){
+    socket.set(nickName, data);
+    console.log(data);
+  });
+  socket.on('message', function(message){
+    socket.get('nickName', function(error, name){
+      var data = { 'message': message, nickName: name };
+      socket.broadcast.emit('message', data);
+      console.log("user" + name + " send this :" + message);
+    })
+  });
 });
 
 // view engine setup
