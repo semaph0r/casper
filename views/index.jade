@@ -1,5 +1,9 @@
 extends layout
 
 block content
+  script(src="/socket.io/socket.io.js")
+  script(src="chat.js")
+  script.
+     var socket = io.connect('https://localhost');
   h1= title
   p Welcome to #{title}
