@@ -23,7 +23,7 @@ var server = https.createServer(sslOptions, app);
 var io = require('socket.io').listen(server, {
     "log level" : 3,
     "match origin protocol" : true,
-    //"transports" : ['polling', 'websocket']
+    "transports" : ['polling', 'websocket']
 });
 server.listen(443);
 
@@ -34,13 +34,11 @@ io.on('connection', function(socket){
     console.log(data);
   });
   socket.on('message', function(message){
-    socket.get('nickName', function(error, name){
-      var data = { 'message': message, nickName: name };
+      var data = { 'message': message };
       socket.broadcast.emit('message', data);
-      console.log("user" + name + " send this :" + message);
-    })
+      console.log("user send this :" + message);
+    });
   });
-});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
