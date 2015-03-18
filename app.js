@@ -10,7 +10,7 @@ var http = require('http');
 var https = require('https');
 var privateKey  = fs.readFileSync('cert/visionhack.key', 'utf8');
 var certificate = fs.readFileSync('cert/ssl.crt', 'utf8');
-var validCiphers = 'ECDHE-RSA-AES256-SHA:AES256-SHA:RC4-SHA:RC4:HIGH:!MD5:!aNULL:!EDH:!AESGCM'
+var validCiphers = 'ECDHE-RSA-AES256-SHA:AES256-SHA:RC4-SHA:HIGH:!MD5:!RC4:!aNULL:!EDH:!AESGCM'
 var sslOptions = {key: privateKey, cert: certificate, ciphers: validCiphers, honorCipherOrder: true};
 
 var routes = require('./routes/index');
@@ -86,6 +86,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
