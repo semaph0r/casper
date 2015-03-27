@@ -24,5 +24,9 @@ $(function(){
 	//$('.chatControls').hide();
 	$('.sendNickname').click(function(){ setNick()});
 	$('.sendMessage').click(function(){ sendMessage()});
-	$('#chatMessage').bind("enterKey", function(){sendMessage()});
+	$(document).keypress(function(e) {
+    if(e.which == 13) {
+        sendMessage();
+    }
+});
 });
